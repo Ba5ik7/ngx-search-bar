@@ -2,14 +2,24 @@ import { Component, inject } from '@angular/core';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { AppService } from '../services/app.service';
 import { NgxSearchBarComponent } from 'ngx-search-bar';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-document',
-  imports: [MatCard, MatCardContent, NgxSearchBarComponent],
+  imports: [
+    AsyncPipe,
+    JsonPipe,
+    MatCard,
+    MatCardContent,
+    NgxSearchBarComponent,
+  ],
   template: `
     <mat-card appearance="outlined">
       <mat-card-content>
         <ngx-search-bar></ngx-search-bar>
+        @if (appService.usersResponse$ | async; as usersResponse) {
+        <pre><code>{{ usersResponse | json }}</code></pre>
+        }
       </mat-card-content>
     </mat-card>
   `,

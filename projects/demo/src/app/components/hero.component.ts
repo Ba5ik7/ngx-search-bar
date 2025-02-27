@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { AppService } from '../services/app.service';
 import { MatTooltip } from '@angular/material/tooltip';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-hero',
@@ -19,7 +20,7 @@ import { MatTooltip } from '@angular/material/tooltip';
             matTooltip="Open the console for blocks"
             (click)="saveValue()"
           >
-            Save
+            Get Users
           </button>
         </div>
       </div>
@@ -94,6 +95,8 @@ export class HeroComponent {
   appService = inject(AppService);
 
   saveValue() {
-    console.log('Hello save value');
+    lastValueFrom(
+      this.appService.fetchUsers()
+    )
   }
 }
