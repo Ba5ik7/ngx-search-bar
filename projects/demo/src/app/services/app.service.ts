@@ -12,8 +12,15 @@ export class AppService {
   usersResponse$ = this.usersResponse.asObservable();
 
   fetchUsers() {
-    return this.httpClient.get<unknown>('https://dummyjson.com/users').pipe(
-      tap((response) => this.usersResponse.next(response))
-    );
+    return this.httpClient
+      .get<unknown>('https://dummyjson.com/users')
+      .pipe(tap((response) => this.usersResponse.next(response)));
+  }
+
+  fetchUser(filter: string) {
+    return this.httpClient
+      .get<unknown>(`https://dummyjson.com/users/search?q=${filter}`)
+      // .get<unknown>(`https://dummyjson.com/users/filter?value=${filter}`)
+      .pipe(tap((response) => this.usersResponse.next(response)));
   }
 }

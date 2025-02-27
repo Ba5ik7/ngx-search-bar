@@ -3,23 +3,20 @@ import { MatCard, MatCardContent } from '@angular/material/card';
 import { AppService } from '../services/app.service';
 import { NgxSearchBarComponent } from 'ngx-search-bar';
 import { AsyncPipe, JsonPipe } from '@angular/common';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-document',
   imports: [
     AsyncPipe,
-    JsonPipe,
     MatCard,
     MatCardContent,
-    NgxSearchBarComponent,
+    NgxSearchBarComponent
   ],
   template: `
     <mat-card appearance="outlined">
       <mat-card-content>
-        <ngx-search-bar></ngx-search-bar>
-        @if (appService.usersResponse$ | async; as usersResponse) {
-        <pre><code>{{ usersResponse | json }}</code></pre>
-        }
+        <ngx-search-bar [results]="appService.usersResponse$ | async" (currentTextValue)="someFunction($event)"></ngx-search-bar>
       </mat-card-content>
     </mat-card>
   `,
@@ -39,5 +36,9 @@ import { AsyncPipe, JsonPipe } from '@angular/common';
   ],
 })
 export class DocumentComponent {
-  appService = inject(AppService);
+  appService = inject(AppService);  
+
+  someFunction(event: string) {
+    lastValueFrom(this.appService.fetchUser(event));
+  }
 }
