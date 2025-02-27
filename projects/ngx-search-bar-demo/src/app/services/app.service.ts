@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Results } from 'ngx-search-bar';
 import { BehaviorSubject, filter, map, tap } from 'rxjs';
 
 interface UsersResponse {

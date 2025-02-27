@@ -36,37 +36,37 @@
         }
       }
     },
-    "demo": {
+    "ngx-search-bar-demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "projects/demo",
-      "sourceRoot": "projects/demo/src",
+      "root": "projects/ngx-search-bar-demo",
+      "sourceRoot": "projects/ngx-search-bar-demo/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/demo",
-            "index": "projects/demo/src/index.html",
-            "browser": "projects/demo/src/main.ts",
+            "outputPath": "dist/ngx-search-bar-demo",
+            "index": "projects/ngx-search-bar-demo/src/index.html",
+            "browser": "projects/ngx-search-bar-demo/src/main.ts",
             "polyfills": [
               "zone.js"
             ],
-            "tsConfig": "projects/demo/tsconfig.app.json",
+            "tsConfig": "projects/ngx-search-bar-demo/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "projects/demo/public"
+                "input": "projects/ngx-search-bar-demo/public"
               }
             ],
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",
-              "projects/demo/src/styles.scss"
+              "projects/ngx-search-bar-demo/src/styles.scss"
             ],
             "scripts": []
           },
@@ -98,10 +98,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "demo:build:production"
+              "buildTarget": "ngx-search-bar-demo:build:production"
             },
             "development": {
-              "buildTarget": "demo:build:development"
+              "buildTarget": "ngx-search-bar-demo:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -116,17 +116,17 @@
               "zone.js",
               "zone.js/testing"
             ],
-            "tsConfig": "projects/demo/tsconfig.spec.json",
+            "tsConfig": "projects/ngx-search-bar-demo/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "projects/demo/public"
+                "input": "projects/ngx-search-bar-demo/public"
               }
             ],
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",
-              "projects/demo/src/styles.scss"
+              "projects/ngx-search-bar-demo/src/styles.scss"
             ],
             "scripts": []
           }

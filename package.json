@@ -1,12 +1,14 @@
 {
-  "name": "ngx-search-bar",
-  "version": "0.0.0",
+  "name": "ngx-search-bar-demo",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build ngx-search-bar --watch --configuration development",
-    "test": "ng test"
+    "build-demo": "ng build ngx-search-bar-demo --configuration production --base-href \"/ngx-search-bar/\"",
+    "build-ngx-search-bar": "ng build ngx-search-bar --configuration production",
+    "watch-demo": "ng serve ngx-search-bar-demo",
+    "watch-ngx-search-bar": "ng build ngx-search-bar --watch --configuration development",
+    "test": "ng test",
+    "deployDemo": "npx angular-cli-ghpages --dir=dist/ngx-search-bar-demo/browser"
   },
   "private": true,
   "dependencies": {
@@ -20,7 +22,6 @@
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
-    "demo": "^0.1.10",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

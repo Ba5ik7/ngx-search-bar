@@ -7,7 +7,7 @@ import { debounceTime } from 'rxjs';
 import { AsyncPipe, JsonPipe } from '@angular/common';
 import { MatCard, MatCardHeader, MatCardModule } from '@angular/material/card';
 
-export interface Results {
+export interface Result {
   title: string;
   description: string;
   image?: string;
@@ -21,6 +21,7 @@ export interface Results {
       <input
         class="filter-text"
         matInput
+        placeholder="Search..."
         [formControl]="searchFieldCtrl"
         [autofocus]="true"
       />
@@ -43,6 +44,7 @@ export interface Results {
       :host {
         display: block;
         width: 100%;
+        pointer: cursor;
         .search-bar {
           width: 100%;
         }
@@ -51,13 +53,15 @@ export interface Results {
           flex-direction: column;
           gap: 1rem;
       }
+    }
     `,
   ],
 })
 export class NgxSearchBarComponent {
-  results = input.required<Results[] | null>();
+  results = input.required<Result[] | null>();
 
   currentTextValue = output<string>();
+  resultsClicked = output<Result>();
 
   searchFieldCtrl = new FormControl('');
 

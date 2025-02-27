@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { AppService } from '../services/app.service';
 import { NgxSearchBarComponent } from 'ngx-search-bar';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { lastValueFrom } from 'rxjs';
 
 @Component({

@@ -13,7 +13,7 @@ import { ThemePickerComponent } from './theme-picker.component';
         href="https://github.com/Ba5ik7/ngx-editor-js2-blocks"
         target="_blank"
       >
-        <mat-icon>format_size</mat-icon>Ngx EditorJs 2
+        <mat-icon>search</mat-icon>Ngx SearchBar
       </a>
       <div class="flex-spacer"></div>
       <app-theme-picker></app-theme-picker>
