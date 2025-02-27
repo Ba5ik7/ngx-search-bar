@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { AppService } from '../services/app.service';
-import { NgxSearchBarComponent } from 'ngx-search-bar';
+import { CurrentTextValue, NgxSearchBarComponent, Result } from 'ngx-search-bar';
 import { AsyncPipe } from '@angular/common';
 import { lastValueFrom } from 'rxjs';
 
@@ -12,8 +12,12 @@ import { lastValueFrom } from 'rxjs';
     <mat-card appearance="outlined">
       <mat-card-content>
         <ngx-search-bar
+          [resultsAppearance]="appService.outlined()"
+          [searchBarAppearance]="appService.outline()"
+          [resultsListType]="appService.grid()"
           [results]="appService.marshalledUsersInToSearchResults$ | async"
-          (currentTextValue)="someFunction($event)"
+          (currentTextValue)="currentTextValueChanged($event)"
+          (resultsClicked)="resultClicked($event)"
         ></ngx-search-bar>
       </mat-card-content>
     </mat-card>
@@ -36,7 +40,11 @@ import { lastValueFrom } from 'rxjs';
 export class DocumentComponent {
   appService = inject(AppService);
 
-  someFunction(event: string) {
-    lastValueFrom(this.appService.filterUser(event));
+  currentTextValueChanged(event: CurrentTextValue) {
+    event && lastValueFrom(this.appService.filterUser(event));
+  }
+
+  resultClicked(event: Result) {
+    console.table(event);
   }
 }
