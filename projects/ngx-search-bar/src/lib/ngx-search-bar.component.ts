@@ -3,14 +3,21 @@ import { MatInput } from '@angular/material/input';
 import { MatFormField } from '@angular/material/form-field';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { debounce, debounceTime, of } from 'rxjs';
-import { JsonPipe } from '@angular/common';
+import { debounceTime } from 'rxjs';
+import { AsyncPipe, JsonPipe } from '@angular/common';
+import { MatCard, MatCardHeader, MatCardModule } from '@angular/material/card';
+
+export interface Results {
+  title: string;
+  description: string;
+  image?: string;
+}
 
 @Component({
   selector: 'ngx-search-bar',
-  imports: [MatInput, MatFormField, ReactiveFormsModule, JsonPipe],
+  imports: [ReactiveFormsModule, MatInput, MatFormField, MatCardModule],
   template: `
-    <mat-form-field class="example-full-width">
+    <mat-form-field class="search-bar">
       <input
         class="filter-text"
         matInput
@@ -18,12 +25,38 @@ import { JsonPipe } from '@angular/common';
         [autofocus]="true"
       />
     </mat-form-field>
-    <pre><code>{{ results() | json }}</code></pre>
+    <!-- <pre><code>{{ results() | json }}</code></pre> -->
+    <div class="results-panal">
+      @for (result of results(); track $index) {
+      <mat-card class="result-card" appearance="outlined">
+        <mat-card-header>
+          <img mat-card-avatar [src]="result.image" />
+          <mat-card-title>{{ result.title }}</mat-card-title>
+          <mat-card-subtitle>{{ result.description }}</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+      }
+    </div>
   `,
-  styles: ``,
+  styles: [
+    `
+      :host {
+        display: block;
+        width: 100%;
+        .search-bar {
+          width: 100%;
+        }
+        .results-panal {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+      }
+    `,
+  ],
 })
 export class NgxSearchBarComponent {
-  results = input();
+  results = input.required<Results[] | null>();
+
   currentTextValue = output<string>();
 
   searchFieldCtrl = new FormControl('');

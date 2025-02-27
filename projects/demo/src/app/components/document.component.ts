@@ -7,16 +7,14 @@ import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-document',
-  imports: [
-    AsyncPipe,
-    MatCard,
-    MatCardContent,
-    NgxSearchBarComponent
-  ],
+  imports: [AsyncPipe, MatCard, MatCardContent, NgxSearchBarComponent],
   template: `
     <mat-card appearance="outlined">
       <mat-card-content>
-        <ngx-search-bar [results]="appService.usersResponse$ | async" (currentTextValue)="someFunction($event)"></ngx-search-bar>
+        <ngx-search-bar
+          [results]="appService.marshalledUsersInToSearchResults$ | async"
+          (currentTextValue)="someFunction($event)"
+        ></ngx-search-bar>
       </mat-card-content>
     </mat-card>
   `,
@@ -36,9 +34,9 @@ import { lastValueFrom } from 'rxjs';
   ],
 })
 export class DocumentComponent {
-  appService = inject(AppService);  
+  appService = inject(AppService);
 
   someFunction(event: string) {
-    lastValueFrom(this.appService.fetchUser(event));
+    lastValueFrom(this.appService.filterUser(event));
   }
 }
