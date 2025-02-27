@@ -3,5 +3,138 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "ngx-search-bar": {
+      "projectType": "library",
+      "root": "projects/ngx-search-bar",
+      "sourceRoot": "projects/ngx-search-bar/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-search-bar/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-search-bar/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-search-bar/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/ngx-search-bar/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    },
+    "demo": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/demo",
+      "sourceRoot": "projects/demo/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/demo",
+            "index": "projects/demo/src/index.html",
+            "browser": "projects/demo/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "projects/demo/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/demo/public"
+              }
+            ],
+            "styles": [
+              "@angular/material/prebuilt-themes/azure-blue.css",
+              "projects/demo/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "demo:build:production"
+            },
+            "development": {
+              "buildTarget": "demo:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/demo/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/demo/public"
+              }
+            ],
+            "styles": [
+              "@angular/material/prebuilt-themes/azure-blue.css",
+              "projects/demo/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": "b2e1bbfe-0e1b-48a4-8bb7-d38d3e1d2c8d"
   }
 }

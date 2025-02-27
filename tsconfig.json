@@ -9,6 +9,11 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "ngx-search-bar": [
+        "./dist/ngx-search-bar"
+      ]
+    },
     "skipLibCheck": true,
     "isolatedModules": true,
     "esModuleInterop": true,
