@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, linkedSignal, signal } from '@angular/core';
+import { CurrentTextValue } from 'ngx-search-bar';
 import { BehaviorSubject, filter, map, tap } from 'rxjs';
 
 interface UsersResponse {
@@ -86,6 +87,24 @@ interface User {
 export class AppService {
   httpClient = inject(HttpClient);
 
+  outlineToggle = signal(false);
+  outline = linkedSignal({
+    source: this.outlineToggle,
+    computation: (value) => value ? 'outline' : 'fill'
+  });
+  
+  outlinedToggle = signal(false);
+  outlined = linkedSignal({
+    source: this.outlinedToggle,
+    computation: (value) => value ? 'outlined' : 'raised'
+  });
+  
+  gridToggle = signal(false);
+  grid = linkedSignal({
+    source: this.gridToggle,
+    computation: (value) => value ? 'grid' : 'list'
+  });
+
   usersResponse = new BehaviorSubject<UsersResponse | null>(null);
   usersResponse$ = this.usersResponse.asObservable();
 
@@ -95,7 +114,7 @@ export class AppService {
     );
   }
 
-  filterUser(filter: string) {
+  filterUser(filter: CurrentTextValue) {
     return (
       this.httpClient
         .get<UsersResponse>(`https://dummyjson.com/users/search?q=${filter}`)

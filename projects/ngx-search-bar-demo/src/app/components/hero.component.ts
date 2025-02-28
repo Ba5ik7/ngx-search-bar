@@ -2,11 +2,13 @@ import { Component, inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { AppService } from '../services/app.service';
 import { MatTooltip } from '@angular/material/tooltip';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { lastValueFrom } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-hero',
-  imports: [MatButton, MatTooltip],
+  imports: [MatButton, MatTooltip, MatSlideToggleModule, FormsModule],
   template: `
     <header class="header-background">
       <div class="header-section">
@@ -14,13 +16,24 @@ import { lastValueFrom } from 'rxjs';
           <h1>Ngx SearchBar</h1>
           <h2>A Custom Themeable Angular Material 3 Component</h2>
         </div>
-        <div class="header-start">
+        <div class="header-actions">
+          <div class="search-style-options">
+            <mat-slide-toggle [(ngModel)]="appService.outlineToggle" labelPosition="before"
+              >Search Bar Appearance</mat-slide-toggle
+            >
+            <mat-slide-toggle [(ngModel)]="appService.outlinedToggle" labelPosition="before"
+              >Results Appearance</mat-slide-toggle
+            >
+            <mat-slide-toggle [(ngModel)]="appService.gridToggle" labelPosition="before"
+              >Results List Type</mat-slide-toggle
+            >
+          </div>
           <button
             mat-stroked-button
-            matTooltip="Open the console for blocks"
+            matTooltip="Shortcut"
             (click)="saveValue()"
           >
-            Get Users
+            Open Search Modal
           </button>
         </div>
       </div>
@@ -35,6 +48,11 @@ import { lastValueFrom } from 'rxjs';
         @include mat.button-overrides(
           (
             outlined-label-text-color: var(--mat-sys-on-secondary),
+          )
+        );
+        @include mat.slide-toggle-overrides(
+          (
+            label-text-color: var(--mat-sys-on-secondary),
           )
         );
         .header-background {
@@ -79,12 +97,18 @@ import { lastValueFrom } from 'rxjs';
               margin: 15px 0 25px 0;
             }
           }
-          .header-start {
+          .header-actions {
             display: flex;
             flex-direction: row;
-            gap: 10px;
+            gap: 24px;
             button {
               margin: 0 5px;
+            }
+            .search-style-options {
+              align-items: flex-end;
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
             }
           }
         }
@@ -96,8 +120,6 @@ export class HeroComponent {
   appService = inject(AppService);
 
   saveValue() {
-    lastValueFrom(
-      this.appService.fetchUsers()
-    )
+    lastValueFrom(this.appService.fetchUsers());
   }
 }
