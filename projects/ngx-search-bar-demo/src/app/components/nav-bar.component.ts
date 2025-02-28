@@ -1,11 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ThemePickerComponent } from './theme-picker.component';
+import {
+  CurrentTextValue,
+  NgxSearchBarHeaderComponent,
+  Result,
+} from 'ngx-search-bar';
+import { AppService } from '../services/app.service';
+import { lastValueFrom } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-nav-bar',
-  imports: [MatIcon, MatButtonModule, ThemePickerComponent],
+  imports: [
+    AsyncPipe,
+    MatIcon,
+    MatButtonModule,
+    ThemePickerComponent,
+    NgxSearchBarHeaderComponent,
+  ],
   template: `
     <nav class="docs-navbar-header">
       <a
@@ -16,6 +30,14 @@ import { ThemePickerComponent } from './theme-picker.component';
         <mat-icon>search</mat-icon>Ngx SearchBar
       </a>
       <div class="flex-spacer"></div>
+      <ngx-search-bar-header
+        [resultsAppearance]="appService.outlined()"
+        [searchBarAppearance]="appService.outline()"
+        [resultsListType]="appService.grid()"
+        [results]="appService.marshalledUsersInToSearchResults$ | async"
+        (currentTextValue)="currentTextValueChanged($event)"
+        (resultsClicked)="resultClicked($event)"
+      ></ngx-search-bar-header>
       <app-theme-picker></app-theme-picker>
     </nav>
   `,
@@ -37,9 +59,24 @@ import { ThemePickerComponent } from './theme-picker.component';
             margin: 0 0.1em 0.1875em 0;
             vertical-align: middle;
           }
+
+          ngx-search-bar-header {
+            max-width: 360px;
+           padding: 0 1em;
+          }
         }
       }
     `,
   ],
 })
-export class NavBarComponent {}
+export class NavBarComponent {
+  appService = inject(AppService);
+
+  currentTextValueChanged(event: CurrentTextValue) {
+    event && lastValueFrom(this.appService.filterUser(event));
+  }
+
+  resultClicked(event: Result) {
+    console.table(event);
+  }
+}

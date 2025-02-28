@@ -8,24 +8,15 @@ import {
 } from '@angular/material/form-field';
 import { MatCardAppearance, MatCardModule } from '@angular/material/card';
 import { debounceTime } from 'rxjs';
-
-export interface Result {
-  title: string;
-  description: string;
-  image?: string;
-}
-
-export type CurrentTextValue = string | null;
-export type ResultsListType = 'list' | 'grid';
+import {
+  CurrentTextValue,
+  Result,
+  ResultsListType,
+} from './ngx-search-bar.service';
 
 @Component({
   selector: 'ngx-search-bar',
-  imports: [
-    ReactiveFormsModule,
-    MatInput,
-    MatFormField,
-    MatCardModule,
-  ],
+  imports: [ReactiveFormsModule, MatInput, MatFormField, MatCardModule],
   template: `
     <mat-form-field class="search-bar" [appearance]="searchBarAppearance()">
       <input
