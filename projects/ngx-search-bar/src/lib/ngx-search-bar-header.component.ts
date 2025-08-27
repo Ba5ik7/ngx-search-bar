@@ -45,7 +45,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
           position: absolute;
           width: 100%;
           max-height: 280px;
-          border-radius: var(--mdc-outlined-card-container-shape, var(--mat-sys-corner-medium));
+          border-radius: var(--mat-card-outlined-container-shape, var(--mat-sys-corner-medium));
           color: var(--mat-sys-on-primary-container);
           background-color: var(--mat-menu-container-color, var(--mat-sys-surface-container));
           box-shadow: var(--mat-sys-level5);
